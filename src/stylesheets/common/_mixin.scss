@@ -1,0 +1,104 @@
+//  弹性盒子
+@mixin flex($display: flex, $direction: row, $align: none) {
+    display: $display;
+    /*  设置主轴方向  */
+    @if ($direction != row) {
+      flex-direction: $direction;
+    }
+    /*  都居中  */
+    @if ($align == all) {
+	    justify-content: center;
+	    align-items: center;
+    }
+    /*  主轴居中  */
+    @if ($align == main) {
+      justify-content: center;
+    }
+    /*  交叉轴居中  */
+    @if ($align == cross) {
+      align-items: center;
+    }
+}
+
+//  多行文本截断
+@mixin line-ellipsis ($lines, $line-height: 1.3em) {
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+    overflow: hidden;
+    line-height: $line-height;
+    max-height: $line-height * $lines;
+}
+
+//  设置placeholder样式
+@mixin placeholder($color: #CCC, $font-size: inherit) {
+    &::-moz-placeholder {
+        color: $color;
+        font-size: $font-size;
+    }
+    &:-ms-input-placeholder {
+        color: $color;
+        font-size: $font-size;
+    }
+    &::-webkit-input-placeholder {
+        color: $color;
+        font-size: $font-size;
+    }
+}
+
+//  三角形 Params[大小，颜色，方向]
+@mixin triangle ($size, $color, $direction) {
+    height: 0;
+    width: 0;
+    @if ($direction==top) or ($direction==bottom) or ($direction==right) or ($direction==left) {
+        border-color: transparent;
+        border-style: solid;
+        border-width: $size / 2;
+        @if $direction==top {
+            border-bottom-color: $color;
+        }
+        @else if $direction==right {
+            border-left-color: $color;
+        }
+        @else if $direction==bottom {
+            border-top-color: $color;
+        }
+        @else if $direction==left {
+            border-right-color: $color;
+        }
+    }
+    @else if ($direction==top-right) or ($direction==top-left) {
+        border-top: $size solid $color;
+        @if $direction==top-right {
+            border-left: $size solid transparent;
+        }
+        @else if $direction==top-left {
+            border-right: $size solid transparent;
+        }
+    }
+    @else if ($direction==bottom-right) or ($direction==bottom-left) {
+        border-bottom: $size solid $color;
+        @if $direction==bottom-right {
+            border-left: $size solid transparent;
+        }
+        @else if $direction==bottom-left {
+            border-right: $size solid transparent;
+        }
+    }
+}
+
+//  向下响应式
+@mixin max-screen($res) {
+    @media ( max-width: $res) {
+        @content;
+    }
+}
+
+//  向上响应式
+@mixin min-screen($res) {
+    @media ( min-width: $res) {
+        @content;
+    }
+}
+
